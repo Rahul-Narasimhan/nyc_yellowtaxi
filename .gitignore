@@ -1,0 +1,91 @@
+# ------------------------------
+# Python
+# ------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ------------------------------
+# Virtual environments
+# ------------------------------
+.venv/
+venv/
+env/
+ENV/
+conda-meta/
+.python-version
+
+# ------------------------------
+# Jupyter
+# ------------------------------
+.ipynb_checkpoints/
+
+# ------------------------------
+# Testing / tooling caches
+# ------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ------------------------------
+# Build / packaging
+# ------------------------------
+build/
+dist/
+*.egg-info/
+
+# ------------------------------
+# Editors / OS
+# ------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Logs / temp
+# ------------------------------
+logs/
+*.log
+tmp/
+temp/
+
+# ------------------------------
+# Secrets / local config
+# ------------------------------
+.env
+.env.*
+*.pem
+
+# ------------------------------
+# Data artifacts (repo root layout)
+# ------------------------------
+raw/
+interim/
+processed/
+
+# ------------------------------
+# Data artifacts (if later moved under /data)
+# ------------------------------
+data/raw/
+data/interim/
+data/processed/
+
+# ------------------------------
+# Generated report tables / heavy artifacts
+# Keep selected PNG/JPG figures if you want to show them in the repo
+# ------------------------------
+reports/data_quality/*.csv
+reports/data_quality/*.parquet
+reports/data_quality/*.feather
+
+# ------------------------------
+# Model artifacts
+# ------------------------------
+artifacts/
+models/
+*.joblib
+*.pkl

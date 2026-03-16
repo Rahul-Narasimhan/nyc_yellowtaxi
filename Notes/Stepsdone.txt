@@ -1,0 +1,91 @@
+# Schema audit
+1. changed airport_fee -> airport_fee
+2. cbd_congestion_fee is optional
+3. 2023: 38,310,226 rows
+   2024: 41,169,720 rows
+   2025: 44,417,596 rows
+   total so far: 123,897,542 rows
+
+
+# Data quality audit
+
+1. raw files contain obvious out-of-window timestamps
+2. negative fares jump from 731K in 2024 to 2.8 million in 2025
+3. zero trip distance is also huge, jumping from 776K in 2024 to 1.2 M in 2025
+
+
+# First set of filtering that we do on dataset after the audit
+
+There are two sets of filtering that we can do on the data
+1. Structural validity filters - if something is not supposed to be there, 
+   it should not be there types, hard filters, like year being out of desired years
+   - Data quality gates retained ~96% of 2023–2024 records but only ~90% of 2025, reflecting both the project’s Jan–Nov 2025 coverage 
+   boundary and elevated anomaly rates in 2025 raw records.
+
+- On further deep dive into the dropped rows, 
+found that vendor 2, payment_type =0, RatecodeID = null and store_and_fwd_flag = null has a major problem
+- The spread check across months show that the bad rows are almost evenly spread out, so it is not month ingestion issue
+
+2. Behavior/ Outlier filters
+   - clipping max fare to be 300, min fare to be 2.5
+   - max duration to be 240, etc
+
+3. found that there are lot of null values in passenger count, rate code id, store and fwd store_and_fwd_flag
+
+
+#************** Creating a baseline model ****************#
+1. 10 features used, 5 numerical, 5 categorical
+   drop time and trip duration not used, because that would be leakage, because at the start of the trip time, we do not know trip duration and trip end time
+
+2. Imputed for missing values like this
+numeric_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="median")),
+])
+categorical_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="constant", fill_value="MISSING")),
+    ("onehot", OneHotEncoder(handle_unknown="ignore")),
+])
+
+3. 
+VALID  MAE : 2.2227
+VALID RMSE : 4.7689
+TEST   MAE : 2.835
+TEST  RMSE : 5.7415
+
+# Baseline error analysis
+
+After adding PU-DO pair column, it became worse
+VALID  MAE : 2.2432
+VALID RMSE : 4.782
+TEST   MAE : 2.8754
+TEST  RMSE : 5.7831
+
+The problem may be:
+
+OD pair represented as naive one-hot is a bad way to use it.
+
+# We remove location based features and check for the scores, to see how they are
+removing pu, du, pu-do pair
+VALID  MAE : 2.4113
+VALID RMSE : 5.2296
+TEST   MAE : 3.0647
+TEST  RMSE : 6.2649
+
+Conclusion : route/location information matters, but raw sparse OD-pair expansion is not the right way to encode it in this baseline setup.
+
+route/location information matters, but raw sparse OD-pair expansion is not the right way to encode it in this baseline setup.
+
+## Add a route frequency feature 
+VALID  MAE : 2.2744
+VALID RMSE : 4.9429
+TEST   MAE : 3.0127
+TEST  RMSE : 6.2776
+
+
+# Hyperparameter tuning
+I ran a controlled hyperparameter study rather than a blind search. 
+Shallower trees underfit the problem, while increasing max_depth to 10 improved future-holdout MAE. 
+Lower learning rate with more trees was competitive but not best on MAE, and stronger subsampling/regularization did not improve
+ temporal generalization in this setup
+
+
