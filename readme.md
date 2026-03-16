@@ -51,7 +51,7 @@ nyc_taxi/
 │       └── build_model_df_multi_year.py
 ├── .gitignore
 └── README.md
-```text
+```
 
 ## What I built
 
