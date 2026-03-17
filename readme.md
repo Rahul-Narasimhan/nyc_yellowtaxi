@@ -177,7 +177,6 @@ Short trips were much easier, while long-distance trips had significantly higher
 
 ### Plots
 
-```markdown
 ![Actual vs Predicted](plots/test_actual_vs_pred.png)
 ![Residual Distribution](plots/test_residual_hist_zoomed.png)
 ![MAE by Month](plots/test_mae_by_month.png)
