@@ -144,7 +144,7 @@ The preprocessing was fit on training data only and reused unchanged on validati
 ### Stable baseline result
 The stable baseline gave a solid starting point on future holdout data and served as the reference point for all later experiments.
 
-## 5. Baseline Model Predictions Analysis
+## 4. Baseline Model Predictions Analysis
 
 After fitting the baseline, I did not stop at MAE / RMSE. I analyzed how the model behaved and where it failed.
 
@@ -176,15 +176,14 @@ Monthly MAE increased from July to November 2025, suggesting that performance de
 Short trips were much easier, while long-distance trips had significantly higher error.
 
 ### Plots
-You can insert your plots here, for example:
 
 ```markdown
-![Actual vs Predicted](reports/figures/actual_vs_predicted.png)
-![Residual Distribution](reports/figures/residual_distribution.png)
-![MAE by Month](reports/figures/mae_by_month.png)
-![MAE by Distance Bucket](reports/figures/mae_by_distance_bucket.png)
+![Actual vs Predicted](plots/test_actual_vs_pred.png)
+![Residual Distribution](plots/test_residual_hist_zoomed.png)
+![MAE by Month](plots/test_mae_by_month.png)
+![MAE by Distance Bucket](plots/test_mae_by_distance_bucket.png.png)
 
-## 6. Experiments on Different Features
+## 5. Experiments on Different Features
 
 I ran controlled experiments to understand which features actually improved future generalization. 
 
@@ -213,7 +212,7 @@ I ran controlled experiments to understand which features actually improved futu
 - [x] Log-target transformation
 - [x] Combinations of airport flags, route features, and log target
 
-## 7. Lessons Learnt from Experiments on Different Features
+## 6. Lessons Learnt from Experiments on Different Features
 
 The feature experiments taught me several useful things:
 
@@ -243,7 +242,7 @@ The feature experiments taught me several useful things:
 * This makes sense because fare is right-skewed and the log transform stabilizes the tail.
 
 
-## 8. Experiments on Different Hyperparameters
+## 7. Experiments on Different Hyperparameters
 
 After the feature experiments, I ran a focused XGBoost hyperparameter study instead of treating the model as a black box.
 
@@ -268,7 +267,7 @@ After the feature experiments, I ran a focused XGBoost hyperparameter study inst
 | **stronger_row_sampling** | 300 | 8 | 0.08 | 0.6 | 0.8 | 1 | 2.2335 | 4.7743 | 2.8550 | 5.7615 |
 | **shallower_trees** | 300 | 6 | 0.08 | 0.8 | 0.8 | 1 | 2.2671 | 4.7827 | 2.9020 | 5.7814 |
 
-## 9. Lessons Learnt from Experiments on Different Hyperparameters
+## 8. Lessons Learnt from Experiments on Different Hyperparameters
 
 The hyperparameter study helped me understand how XGBoost behaves on this specific problem.
 
@@ -292,7 +291,7 @@ The hyperparameter study helped me understand how XGBoost behaves on this specif
 
 ---
 
-## 10. Next Steps
+## 9. Next Steps
 
 There are several natural next steps that would further strengthen the model's performance and reliability:
 
