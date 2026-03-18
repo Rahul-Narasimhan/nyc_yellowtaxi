@@ -177,10 +177,24 @@ Short trips were much easier, while long-distance trips had significantly higher
 
 ### Plots
 
-![Actual vs Predicted](plots/test_actual_vs_pred.png)
-![Residual Distribution](plots/test_residual_hist_zoomed.png)
-![MAE by Month](plots/test_mae_by_month.png)
-![MAE by Distance Bucket](plots/test_mae_by_distance_bucket.png.png)
+<!-- ![Actual vs Predicted](plots/actual_vs_predicted.png)
+![Residual Distribution](plots/residual_distribution.png)
+![MAE by Month](plots/mae_by_month.png)
+![MAE by Distance Bucket](plots/mae_by_distance_bucket.png) -->
+<p align="center">
+  <img src="plots/actual_vs_predicted.png" width="48%" />
+  <img src="plots/residual_distribution.png" width="48%" />
+</p>
+
+<p align="center">
+  <img src="plots/error_vs_distance.png" width="48%" />
+  <img src="plots/mae_by_month.png" width="48%" />
+</p>
+
+<p align="center">
+  <img src="plots/mean_residual_by_month.png" width="48%" />
+  <img src="plots/mae_by_distance_bucket.png" width="48%" />
+</p>
 
 ## 5. Experiments on Different Features
 
